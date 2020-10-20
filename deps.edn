@@ -1,0 +1,30 @@
+{:paths ["src" "resources"]
+ :deps {org.clojure/clojure {:mvn/version "1.10.1"}
+        com.walmartlabs/lacinia  {:mvn/version "0.38.0-alpha-3"}
+        com.walmartlabs/lacinia-pedestal  {:mvn/version "0.15.0-alpha-2"}
+        com.stuartsierra/component {:mvn/version "0.3.2"}
+        com.cognitect.aws/api       {:mvn/version "0.8.474"}
+        com.cognitect.aws/endpoints {:mvn/version "1.1.11.842"}
+        com.cognitect.aws/s3        {:mvn/version "809.2.734.0"}
+        com.cognitect.aws/ec2       {:mvn/version "809.2.734.0"}
+        }
+ :aliases
+ {:test {:extra-paths ["test"]
+         :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}}}
+  :runner
+  {:extra-deps {com.cognitect/test-runner
+                {:git/url "https://github.com/cognitect-labs/test-runner"
+                 :sha "f7ef16dc3b8332b0d77bc0274578ad5270fbfedd"}}
+   :main-opts ["-m" "cognitect.test-runner"
+               "-d" "test"]}
+  :jar {:extra-deps {seancorfield/depstar {:mvn/version "1.1.104"}}
+        :main-opts ["-m" "hf.depstar.jar" "lacinia-backend-aws.jar"]}
+  :install {:extra-deps {deps-deploy/deps-deploy {:mvn/version "0.0.9"}}
+            :main-opts ["-m" "deps-deploy.deps-deploy" "install" "lacinia-backend-aws.jar"]}
+  :deploy {:extra-deps {deps-deploy/deps-deploy {:mvn/version "0.0.9"}}
+           :main-opts ["-m" "deps-deploy.deps-deploy" "deploy" "lacinia-backend-aws.jar"]}
+  :uberjar {:extra-deps {seancorfield/depstar {:mvn/version "1.1.104"}}
+            :main-opts ["-m" "hf.depstar.uberjar" "lacinia-backend-aws-with-deps.jar"
+                        "-C" "-m" "matteoredaelli.lacinia-backend-aws"]}
+  }
+ }

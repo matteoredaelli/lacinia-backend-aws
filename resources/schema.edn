@@ -1,0 +1,58 @@
+{
+ :objects {
+           :AwsEc2 {
+                    :fields {:Groups {:type (list String)}
+                             :Instances {:type (list :AwsEc2Instances)}
+                             }
+                    }
+           :AwsEc2Instances {
+                             :fields {:Architecture {:type String}
+                                      :Hypervisor {:type String}
+                                      :LaunchTime {:type String}
+                                      :ImageId {:type String}
+                                      :InstanceId  {:type String}
+                                      :InstanceType {:type String}
+                                      :LaunchTime {:type String}
+                                      :KeyName  {:type String}
+                                      :Placement {:type AwsPlacement}
+                                      :PublicDnsName {:type String}
+                                      :PrivateDnsName {:type String}
+                                      :PrivateIpAddress {:type String}
+                                      :SecurityGroups {:type (list :AwsSecurityGroup)}
+                                      :State {:type :AwsState}
+                                      :SubnetId {:type String}
+                                      :Tags {:type (list :AwsTag)}
+                                      :VpcId {:type String}
+                                      }
+                             }
+           :AwsPlacement {
+                          :fields {:AvailabilityZone {:type String}
+                                   :GroupName {:type String}
+                                   :PartitionNumber {:type Int}
+                                   :Tenancy {:type String}
+                                   }
+                          }
+           :AwsSecurityGroup {
+                              :fields {:GroupName {:type String}
+                                       :GroupId{:type String}
+                                       }
+                              }
+           :AwsState {
+                      :fields {:Code {:type Int}
+                               :Name {:type String}
+                               }
+                      }
+           :AwsTag {
+                    :fields {:Key {:type String}
+                             :Value {:type String}
+                             }
+                    }
+           }
+ :queries {
+           :aws_ec2_list {:type (list :AwsEc2)
+                          :args {:profile {:type String}
+                                 :filters {:type (list String)}}
+                          :resolve :query/aws-ec2}
+
+           }
+ }
