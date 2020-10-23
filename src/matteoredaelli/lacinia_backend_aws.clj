@@ -11,7 +11,7 @@
   the HTTP port won't conflict with a default running system."
   []
   (-> (system/new-system)
-      (assoc-in [:server :port] 8888)))
+      (assoc-in [:aws-server :port] 8888)))
 
 (def ^:dynamic ^:private *system*)
 

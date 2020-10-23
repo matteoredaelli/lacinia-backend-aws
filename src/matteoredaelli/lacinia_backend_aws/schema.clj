@@ -16,7 +16,7 @@
 
 (defn resolver-map
   [component]
-  (let [backend (:backend component)]
+  (let [backend (:aws-backend component)]
     {
      :query/aws-ec2 (query-aws-ec2 backend)
      }
@@ -24,7 +24,7 @@
 
 (defn get-schema
   [component]
-  (-> (io/resource "schema.edn")
+  (-> (io/resource "aws-schema.edn")
       slurp
       edn/read-string))
 
@@ -40,13 +40,13 @@
   component/Lifecycle
 
   (start [this]
-    (assoc this :schema (load-schema this)))
+    (assoc this :aws-schema (load-schema this)))
 
   (stop [this]
-    (assoc this :schema nil)))
+    (assoc this :aws-schema nil)))
 
 (defn new-schema-provider
   []
   {:schema-provider (-> {}
                         map->SchemaProvider
-                        (component/using [:backend]))})
+                        (component/using [:aws-backend]))})

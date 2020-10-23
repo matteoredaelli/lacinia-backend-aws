@@ -8,7 +8,6 @@
            :AwsEc2Instances {
                              :fields {:Architecture {:type String}
                                       :Hypervisor {:type String}
-                                      :LaunchTime {:type String}
                                       :ImageId {:type String}
                                       :InstanceId  {:type String}
                                       :InstanceType {:type String}
@@ -49,10 +48,9 @@
                     }
            }
  :queries {
-           :aws_ec2_list {:type (list :AwsEc2)
-                          :args {:profile {:type String}
-                                 :filters {:type (list String)}}
-                          :resolve :query/aws-ec2}
-
+           :aws_ec2 {:type (list :AwsEc2)
+                     :args {:profile {:type String}
+                            :filters {:type (list String)}}
+                     :resolve :query/aws-ec2}
            }
  }

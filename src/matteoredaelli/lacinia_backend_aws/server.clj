@@ -7,17 +7,17 @@
 
   component/Lifecycle
   (start [this]
-    (assoc this :server (-> schema-provider
-                            :schema
-                            (lp2/default-service nil)
-                            http/create-server
-                            http/start)))
+    (assoc this :aws-server (-> schema-provider
+                                :aws-schema
+                                (lp2/default-service nil)
+                                http/create-server
+                                http/start)))
 
   (stop [this]
     (http/stop server)
-    (assoc this :server nil)))
+    (assoc this :aws-server nil)))
 
 (defn new-server
   []
-  {:server (component/using (map->Server {:port 8888})
+  {:aws-server (component/using (map->Server {:port 8888})
                             [:schema-provider])})

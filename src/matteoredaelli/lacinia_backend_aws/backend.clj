@@ -22,15 +22,15 @@
 
 (defn new-backend
   []
-  {:backend (map->AwsBackend {})})
+  {:aws-backend (map->AwsBackend {})})
 
 (defn parse-filter
   [filter]
-  (let [kv (clojure.string/split filter #":")
+  (let [kv (clojure.string/split filter #"=")
         key (nth kv 0)
         values_string (nth kv 1)
         values (clojure.string/split values_string #",")]
-    {key values}))
+    {:Name key :Values values}))
 
 (defn parse-filters
   [filters]
@@ -47,9 +47,9 @@
   (let [ec2 (aws-connect profile :ec2)
         filters (parse-filters filters-string)
         resp (aws/invoke ec2
-                {:op :DescribeInstances
-                 :Filters filters
-                 }
+                         {:op :DescribeInstances
+                          :request {:Filters filters}
+                          }
                 )]
     (:Reservations resp)
   ))
