@@ -31,8 +31,9 @@
   [component]
   (let [backend (:aws-backend component)]
     {:Query {:aws_ec2 (query-aws-ec2 backend)
-             :ec2 (query-aws-ec2 backend)}
-     :Ec2Instances {:customfield (field-customfield backend)}}
+             :aws_rds (query-aws-rds backend)}
+     ;; :Ec2Instances {:customfield (field-customfield backend)}
+     }
     ))
 
 (defn resolver-map-old
@@ -49,7 +50,7 @@
 
 (defn get-schema
   [component]
-  (-> "ec2-decribe-instances.graphql"
+  (-> "aws-schema.graphql"
       io/resource
       slurp
       (parser/parse-schema {:resolvers (resolver-map component)})))

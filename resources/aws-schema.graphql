@@ -1,33 +1,59 @@
-type MetadataOptions { State: String
+type MetadataOptions {
+  State: String
   HttpTokens: String
   HttpPutResponseHopLimit: Int
-  HttpEndpoint: String }
+  HttpEndpoint: String
+}
 
-type HibernationOptions { Configured: Boolean }
+type HibernationOptions {
+  Configured: Boolean
+}
 
-type CapacityReservationSpecification { CapacityReservationPreference: String }
+type CapacityReservationSpecification {
+  CapacityReservationPreference: String
+}
 
-type CpuOptions { CoreCount: Int ThreadsPerCore: Int }
+type CpuOptions {
+  CoreCount: Int
+  ThreadsPerCore: Int
+}
 
-type Tags { Key: String Value: String }
+type Tags {
+  Key: String
+  Value: String
+}
 
-type StateReason { Code: String Message: String }
+type StateReason {
+  Code: String
+  Message: String
+}
 
-type SecurityGroups { GroupName: String GroupId: String }
+type SecurityGroups {
+  GroupName: String
+  GroupId: String
+}
 
-type PrivateIpAddresses { Primary: Boolean
+type PrivateIpAddresses {
+  Primary: Boolean
   PrivateDnsName: String
-  PrivateIpAddress: String }
+  PrivateIpAddress: String
+}
 
-type Groups { GroupName: String GroupId: String }
+type Groups {
+  GroupName: String
+  GroupId: String
+}
 
-type Attachment { AttachTime: String
+type Attachment {
+  AttachTime: String
   AttachmentId: String
   DeleteOnTermination: Boolean
   DeviceIndex: Int
-  Status: String }
+  Status: String
+}
 
-type NetworkInterfaces { Description: String
+type NetworkInterfaces {
+  Description: String
   MacAddress: String
   NetworkInterfaceId: String
   OwnerId: String
@@ -38,27 +64,41 @@ type NetworkInterfaces { Description: String
   SubnetId: String
   VpcId: String
   InterfaceType: String
-  PrivateIpAddresses: [PrivateIpAddresses ]
-  Ipv6Addresses: [String ]
-  Groups: [Groups ]
-  Attachment: Attachment }
+  PrivateIpAddresses: [PrivateIpAddresses]
+  Ipv6Addresses: [String]
+  Groups: [Groups]
+  Attachment: Attachment
+}
 
-type Ebs { AttachTime: String
+type Ebs {
+  AttachTime: String
   DeleteOnTermination: Boolean
   Status: String
-  VolumeId: String }
+  VolumeId: String
+}
 
-type BlockDeviceMappings { DeviceName: String Ebs: Ebs }
+type BlockDeviceMappings {
+  DeviceName: String
+  Ebs: Ebs
+}
 
-type State { Code: Int Name: String }
+type State {
+  Code: Int
+  Name: String
+}
 
-type Placement { AvailabilityZone: String
+type Placement {
+  AvailabilityZone: String
   GroupName: String
-  Tenancy: String }
+  Tenancy: String
+}
 
-type Monitoring { State: String }
+type Monitoring {
+  State: String
+}
 
-type Instances { AmiLaunchIndex: Int
+type Instances {
+  AmiLaunchIndex: Int
   ImageId: String
   InstanceId: String
   InstanceType: String
@@ -83,32 +123,125 @@ type Instances { AmiLaunchIndex: Int
   HibernationOptions: HibernationOptions
   CapacityReservationSpecification: CapacityReservationSpecification
   CpuOptions: CpuOptions
-  Tags: [Tags ]
+  Tags: [Tags]
   StateReason: StateReason
-  SecurityGroups: [SecurityGroups ]
-  NetworkInterfaces: [NetworkInterfaces ]
-  BlockDeviceMappings: [BlockDeviceMappings ]
+  SecurityGroups: [SecurityGroups]
+  NetworkInterfaces: [NetworkInterfaces]
+  BlockDeviceMappings: [BlockDeviceMappings]
   State: State
-  ProductCodes: [String ]
+  ProductCodes: [String]
   Placement: Placement
-  Monitoring: Monitoring }
+  Monitoring: Monitoring
+}
 
-type Reservations { OwnerId: String
+type Reservations {
+  OwnerId: String
   ReservationId: String
-  Instances: [Instances ]
-  Groups: [String ] }
+  Instances: [Instances]
+  Groups: [String]
+}
 
 type Ec2Instances {
-  customfield: String
-  Reservations: [Reservations ] }
+  Reservations: [Reservations]
+}
+
+type OptionGroupMemberships {
+  OptionGroupName: String
+  Status: String
+}
+
+type SubnetAvailabilityZone {
+  Name: String
+}
+
+type Subnets {
+  SubnetIdentifier: String
+  SubnetStatus: String
+  SubnetAvailabilityZone: SubnetAvailabilityZone
+}
+
+type DbSubnetGroup {
+  DBSubnetGroupName: String
+  DBSubnetGroupDescription: String
+  VpcId: String
+  SubnetGroupStatus: String
+  Subnets: [Subnets]
+}
+
+type DbParameterGroups {
+  DBParameterGroupName: String
+  ParameterApplyStatus: String
+}
+
+type VpcSecurityGroups {
+  VpcSecurityGroupId: String
+  Status: String
+}
+
+type Endpoint {
+  Address: String
+  Port: Int
+  HostedZoneId: String
+}
+
+type DbInstances {
+  DBInstanceIdentifier: String
+  DBInstanceClass: String
+  Engine: String
+  DBInstanceStatus: String
+  MasterUsername: String
+  AllocatedStorage: Int
+  InstanceCreateTime: String
+  PreferredBackupWindow: String
+  BackupRetentionPeriod: Int
+  AvailabilityZone: String
+  PreferredMaintenanceWindow: String
+  MultiAZ: Boolean
+  EngineVersion: String
+  AutoMinorVersionUpgrade: Boolean
+  LicenseModel: String
+  PubliclyAccessible: Boolean
+  StorageType: String
+  DbInstancePort: Int
+  DBClusterIdentifier: String
+  StorageEncrypted: Boolean
+  KmsKeyId: String
+  DbiResourceId: String
+  CACertificateIdentifier: String
+  CopyTagsToSnapshot: Boolean
+  MonitoringInterval: Int
+  PromotionTier: Int
+  DBInstanceArn: String
+  IAMDatabaseAuthenticationEnabled: Boolean
+  PerformanceInsightsEnabled: Boolean
+  DeletionProtection: Boolean
+  AssociatedRoles: [String]
+  DomainMemberships: [String]
+  OptionGroupMemberships: [OptionGroupMemberships]
+  ReadReplicaDBInstanceIdentifiers: [String]
+  DBSubnetGroup: DbSubnetGroup
+  DBParameterGroups: [DbParameterGroups]
+  VpcSecurityGroups: [VpcSecurityGroups]
+  DBSecurityGroups: [String]
+  Endpoint: Endpoint
+}
+
+type RdsInstances {
+  DBInstances: [DbInstances]
+}
+
+type Aws {
+  Ec2Instances: Ec2Instances
+  RDSInstances: RdsInstances
+}
 
 type Query {
   aws_ec2(
     profile: String = "default"
-    filter: String = ""): Ec2Instances
-  ec2(
+    filters: String = ""): Ec2Instances
+  aws_rds(
     profile: String = "default"
-    filter: String = ""): Ec2Instances
+    filters: String = ""): RdsInstances
 }
 
 schema {
