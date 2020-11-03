@@ -1,0 +1,116 @@
+type MetadataOptions { State: String
+  HttpTokens: String
+  HttpPutResponseHopLimit: Int
+  HttpEndpoint: String }
+
+type HibernationOptions { Configured: Boolean }
+
+type CapacityReservationSpecification { CapacityReservationPreference: String }
+
+type CpuOptions { CoreCount: Int ThreadsPerCore: Int }
+
+type Tags { Key: String Value: String }
+
+type StateReason { Code: String Message: String }
+
+type SecurityGroups { GroupName: String GroupId: String }
+
+type PrivateIpAddresses { Primary: Boolean
+  PrivateDnsName: String
+  PrivateIpAddress: String }
+
+type Groups { GroupName: String GroupId: String }
+
+type Attachment { AttachTime: String
+  AttachmentId: String
+  DeleteOnTermination: Boolean
+  DeviceIndex: Int
+  Status: String }
+
+type NetworkInterfaces { Description: String
+  MacAddress: String
+  NetworkInterfaceId: String
+  OwnerId: String
+  PrivateDnsName: String
+  PrivateIpAddress: String
+  SourceDestCheck: Boolean
+  Status: String
+  SubnetId: String
+  VpcId: String
+  InterfaceType: String
+  PrivateIpAddresses: [PrivateIpAddresses ]
+  Ipv6Addresses: [String ]
+  Groups: [Groups ]
+  Attachment: Attachment }
+
+type Ebs { AttachTime: String
+  DeleteOnTermination: Boolean
+  Status: String
+  VolumeId: String }
+
+type BlockDeviceMappings { DeviceName: String Ebs: Ebs }
+
+type State { Code: Int Name: String }
+
+type Placement { AvailabilityZone: String
+  GroupName: String
+  Tenancy: String }
+
+type Monitoring { State: String }
+
+type Instances { AmiLaunchIndex: Int
+  ImageId: String
+  InstanceId: String
+  InstanceType: String
+  KeyName: String
+  LaunchTime: String
+  PrivateDnsName: String
+  PrivateIpAddress: String
+  PublicDnsName: String
+  StateTransitionReason: String
+  SubnetId: String
+  VpcId: String
+  Architecture: String
+  ClientToken: String
+  EbsOptimized: Boolean
+  EnaSupport: Boolean
+  Hypervisor: String
+  RootDeviceName: String
+  RootDeviceType: String
+  SourceDestCheck: Boolean
+  VirtualizationType: String
+  MetadataOptions: MetadataOptions
+  HibernationOptions: HibernationOptions
+  CapacityReservationSpecification: CapacityReservationSpecification
+  CpuOptions: CpuOptions
+  Tags: [Tags ]
+  StateReason: StateReason
+  SecurityGroups: [SecurityGroups ]
+  NetworkInterfaces: [NetworkInterfaces ]
+  BlockDeviceMappings: [BlockDeviceMappings ]
+  State: State
+  ProductCodes: [String ]
+  Placement: Placement
+  Monitoring: Monitoring }
+
+type Reservations { OwnerId: String
+  ReservationId: String
+  Instances: [Instances ]
+  Groups: [String ] }
+
+type Ec2Instances {
+  customfield: String
+  Reservations: [Reservations ] }
+
+type Query {
+  aws_ec2(
+    profile: String = "default"
+    filter: String = ""): Ec2Instances
+  ec2(
+    profile: String = "default"
+    filter: String = ""): Ec2Instances
+}
+
+schema {
+  query: Query
+}

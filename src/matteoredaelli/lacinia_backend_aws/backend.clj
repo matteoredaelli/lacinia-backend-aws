@@ -51,5 +51,17 @@
                           :request {:Filters filters}
                           }
                 )]
-    (:Reservations resp)
+    resp
+  ))
+
+(defn rds-describe-db-instances
+  [component profile filters-string]
+  (let [rds (aws-connect profile :rds)
+        filters (parse-filters filters-string)
+        resp (aws/invoke rds
+                         {:op :DescribeDBInstances
+                          :request {:Filters filters}
+                          }
+                )]
+    resp
   ))

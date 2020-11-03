@@ -16,7 +16,7 @@ Add this library to your project: see https://clojars.org/matteoredaelli/lacinia
 
 Run the project directly:
 
-	$ clojure -m matteoredaelli.lacinia-backend-aws
+	$ clojure -M -m matteoredaelli.lacinia-backend-aws
 
 Run the project's tests (they'll fail until you edit them):
 
