@@ -11,13 +11,14 @@
 (defn field-customfield
   [backend]
   (fn [context _args value]
-    "ciao"))
+    "dummy test field"))
 
 (defn query-aws-ec2
   [backend]
   (fn [context args value]
     (let [
           {:keys [profile filters]} args]
+      (clojure.pprint/pprint args)
       (backend/ec2-describe-instances backend profile filters))))
 
 (defn query-aws-rds

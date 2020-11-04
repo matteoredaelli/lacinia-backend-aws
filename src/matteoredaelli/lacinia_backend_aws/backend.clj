@@ -34,7 +34,7 @@
 
 (defn parse-filters
   [filters]
-  (map parse-filter filters))
+  (map parse-filter (clojure.string/split filters #";")))
 
 (defn aws-connect
   [profile service]
@@ -50,7 +50,7 @@
                          {:op :DescribeInstances
                           :request {:Filters filters}
                           }
-                )]
+                         )]
     resp
   ))
 

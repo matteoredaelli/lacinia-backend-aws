@@ -1,3 +1,140 @@
+type OptionGroupMemberships {
+  OptionGroupName: String
+  Status: String
+}
+
+type SubnetAvailabilityZone {
+  Name: String
+}
+
+type Subnets {
+  SubnetIdentifier: String
+  SubnetStatus: String
+  SubnetAvailabilityZone: SubnetAvailabilityZone
+}
+
+type DbSubnetGroup {
+  DBSubnetGroupName: String
+  DBSubnetGroupDescription: String
+  VpcId: String
+  SubnetGroupStatus: String
+  Subnets: [Subnets]
+}
+
+type DbParameterGroups {
+  DBParameterGroupName: String
+  ParameterApplyStatus: String
+}
+
+type VpcSecurityGroups {
+  VpcSecurityGroupId: String
+  Status: String
+}
+
+type Endpoint {
+  Address: String
+  Port: Int
+  HostedZoneId: String
+}
+
+type DbInstances {
+  DBInstanceIdentifier: String
+  DBInstanceClass: String
+  Engine: String
+  DBInstanceStatus: String
+  MasterUsername: String
+  AllocatedStorage: Int
+  InstanceCreateTime: String
+  PreferredBackupWindow: String
+  BackupRetentionPeriod: Int
+  AvailabilityZone: String
+  PreferredMaintenanceWindow: String
+  MultiAZ: Boolean
+  EngineVersion: String
+  AutoMinorVersionUpgrade: Boolean
+  LicenseModel: String
+  PubliclyAccessible: Boolean
+  StorageType: String
+  DbInstancePort: Int
+  DBClusterIdentifier: String
+  StorageEncrypted: Boolean
+  KmsKeyId: String
+  DbiResourceId: String
+  CACertificateIdentifier: String
+  CopyTagsToSnapshot: Boolean
+  MonitoringInterval: Int
+  PromotionTier: Int
+  DBInstanceArn: String
+  IAMDatabaseAuthenticationEnabled: Boolean
+  PerformanceInsightsEnabled: Boolean
+  DeletionProtection: Boolean
+  AssociatedRoles: [String]
+  DomainMemberships: [String]
+  OptionGroupMemberships: [OptionGroupMemberships]
+  ReadReplicaDBInstanceIdentifiers: [String]
+  DBSubnetGroup: DbSubnetGroup
+  DBParameterGroups: [DbParameterGroups]
+  VpcSecurityGroups: [VpcSecurityGroups]
+  DBSecurityGroups: [String]
+  Endpoint: Endpoint
+}
+
+type Rds {
+  NextToken: String
+  DBInstances: [DbInstances]
+}
+
+type DbClusterMembers {
+  DBInstanceIdentifier: String
+  IsClusterWriter: Boolean
+  DBClusterParameterGroupStatus: String
+  PromotionTier: Int
+}
+
+type DbClusters {
+  AllocatedStorage: Int
+  BackupRetentionPeriod: Int
+  DBClusterIdentifier: String
+  DBClusterParameterGroup: String
+  DBSubnetGroup: String
+  Status: String
+  EarliestRestorableTime: String
+  Endpoint: String
+  ReaderEndpoint: String
+  MultiAZ: Boolean
+  Engine: String
+  EngineVersion: String
+  LatestRestorableTime: String
+  Port: Int
+  MasterUsername: String
+  PreferredBackupWindow: String
+  PreferredMaintenanceWindow: String
+  HostedZoneId: String
+  StorageEncrypted: Boolean
+  KmsKeyId: String
+  DbClusterResourceId: String
+  DBClusterArn: String
+  IAMDatabaseAuthenticationEnabled: Boolean
+  ClusterCreateTime: String
+  EngineMode: String
+  DeletionProtection: Boolean
+  HttpEndpointEnabled: Boolean
+  ActivityStreamStatus: String
+  CopyTagsToSnapshot: Boolean
+  CrossAccountClone: Boolean
+  DomainMemberships: [String]
+  AssociatedRoles: [String]
+  VpcSecurityGroups: [VpcSecurityGroups]
+  DBClusterMembers: [DbClusterMembers]
+  ReadReplicaIdentifiers: [String]
+  AvailabilityZones: [String]
+}
+
+type RdsClusters {
+  NextToken: String
+  DBClusters: [DbClusters]
+}
+
 type MetadataOptions {
   State: String
   HttpTokens: String
@@ -87,6 +224,11 @@ type State {
   Name: String
 }
 
+type ProductCodes {
+  ProductCodeId: String
+  ProductCodeType: String
+}
+
 type Placement {
   AvailabilityZone: String
   GroupName: String
@@ -113,7 +255,6 @@ type Instances {
   Architecture: String
   ClientToken: String
   EbsOptimized: Boolean
-  EnaSupport: Boolean
   Hypervisor: String
   RootDeviceName: String
   RootDeviceType: String
@@ -129,7 +270,7 @@ type Instances {
   NetworkInterfaces: [NetworkInterfaces]
   BlockDeviceMappings: [BlockDeviceMappings]
   State: State
-  ProductCodes: [String]
+  ProductCodes: [ProductCodes]
   Placement: Placement
   Monitoring: Monitoring
 }
@@ -141,109 +282,27 @@ type Reservations {
   Groups: [String]
 }
 
-type Ec2Instances {
+type Ec2 {
+  NextToken: String
   Reservations: [Reservations]
 }
 
-type OptionGroupMemberships {
-  OptionGroupName: String
-  Status: String
-}
-
-type SubnetAvailabilityZone {
-  Name: String
-}
-
-type Subnets {
-  SubnetIdentifier: String
-  SubnetStatus: String
-  SubnetAvailabilityZone: SubnetAvailabilityZone
-}
-
-type DbSubnetGroup {
-  DBSubnetGroupName: String
-  DBSubnetGroupDescription: String
-  VpcId: String
-  SubnetGroupStatus: String
-  Subnets: [Subnets]
-}
-
-type DbParameterGroups {
-  DBParameterGroupName: String
-  ParameterApplyStatus: String
-}
-
-type VpcSecurityGroups {
-  VpcSecurityGroupId: String
-  Status: String
-}
-
-type Endpoint {
-  Address: String
-  Port: Int
-  HostedZoneId: String
-}
-
-type DbInstances {
-  DBInstanceIdentifier: String
-  DBInstanceClass: String
-  Engine: String
-  DBInstanceStatus: String
-  MasterUsername: String
-  AllocatedStorage: Int
-  InstanceCreateTime: String
-  PreferredBackupWindow: String
-  BackupRetentionPeriod: Int
-  AvailabilityZone: String
-  PreferredMaintenanceWindow: String
-  MultiAZ: Boolean
-  EngineVersion: String
-  AutoMinorVersionUpgrade: Boolean
-  LicenseModel: String
-  PubliclyAccessible: Boolean
-  StorageType: String
-  DbInstancePort: Int
-  DBClusterIdentifier: String
-  StorageEncrypted: Boolean
-  KmsKeyId: String
-  DbiResourceId: String
-  CACertificateIdentifier: String
-  CopyTagsToSnapshot: Boolean
-  MonitoringInterval: Int
-  PromotionTier: Int
-  DBInstanceArn: String
-  IAMDatabaseAuthenticationEnabled: Boolean
-  PerformanceInsightsEnabled: Boolean
-  DeletionProtection: Boolean
-  AssociatedRoles: [String]
-  DomainMemberships: [String]
-  OptionGroupMemberships: [OptionGroupMemberships]
-  ReadReplicaDBInstanceIdentifiers: [String]
-  DBSubnetGroup: DbSubnetGroup
-  DBParameterGroups: [DbParameterGroups]
-  VpcSecurityGroups: [VpcSecurityGroups]
-  DBSecurityGroups: [String]
-  Endpoint: Endpoint
-}
-
-type RdsInstances {
-  DBInstances: [DbInstances]
-}
-
-type Aws {
-  Ec2Instances: Ec2Instances
-  RDSInstances: RdsInstances
+type AWS {
+  RDS: Rds
+  RDSClusters: RdsClusters
+  EC2: Ec2
 }
 
 type Query {
   aws_ec2(
     profile: String = "default"
-    filters: String = ""): Ec2Instances
+    filters: String = ""): Ec2
   aws_rds(
     profile: String = "default"
-    filters: String = ""): RdsInstances
+    filters: String = ""): Rds
 }
 
 schema {
   query: Query
 }
+

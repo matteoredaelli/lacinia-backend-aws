@@ -1,0 +1,8 @@
+ec2 describe-instances,EC2
+ec2 describe-security-groups,SecurityGroup
+ec2 describe-subnets,Subnet
+ec2 describe-vpcs,Vpcs
+iam list-users,User
+emr list-clusters,EMR
+rds describe-db-clusters,RDSCluster
+rds describe-db-instances,RDS
