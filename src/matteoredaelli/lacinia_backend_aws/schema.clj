@@ -4,6 +4,7 @@
     [clojure.java.io :as io]
     [com.walmartlabs.lacinia.schema :as schema]
     [com.walmartlabs.lacinia.parser.schema :as parser]
+    [com.walmartlabs.lacinia.resolve :as resolve]
     [com.walmartlabs.lacinia.util :as util]
     [com.stuartsierra.component :as component]
     [matteoredaelli.lacinia-backend-aws.backend :as backend]))
@@ -13,20 +14,41 @@
   (fn [context _args value]
     "dummy test field"))
 
-(defn query-aws
+(defn query-aws-old
   [backend service op]
   (fn [context args value]
     (let [
           {:keys [profile filters]} args]
-      (clojure.pprint/pprint args)
+      (clojure.pprint/pprint context)
       (backend/aws-invoke backend profile service op filters))))
+
+(defn invoke-aws
+  [backend service op]
+  (fn [context args value]
+    (let [
+          {:keys [::profile ::filters]} context]
+      (clojure.pprint/pprint value)
+      (backend/aws-invoke backend ::profile service op ::filters))))
+
+(defn query-aws
+  [backend]
+  (fn [context args value]
+    (let [
+          {:keys [profile filters]} args]
+      (clojure.pprint/pprint args
+      (-> {}
+                 ;; https://lacinia.readthedocs.io/en/latest/resolve/context.html
+          (resolve/with-context {::profile profile
+                                 ::filter filter
+                                 })))))
 
 (defn resolver-map
   [component]
   (let [backend (:aws-backend component)]
-    {:Query {:aws_ec2 (query-aws backend :ec2 :DescribeInstances)
-             :aws_rds (query-aws backend :rds :DescribeDBInstances)}
-     ;; :Ec2Instances {:customfield (field-customfield backend)}
+    {:Query {:aws (query-aws backend)
+            }
+     :Aws {:EC2 (invoke-aws backend :ec2 :DescribeInstances)
+           :customfield (field-customfield backend)}
      }
     ))
 

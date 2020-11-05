@@ -407,7 +407,7 @@ type Ec2 {
   Reservations: [Reservations]
 }
 
-type AWS {
+type Aws {
   RDS: Rds
   RDSCluster: RdsCluster
   EMR: Emr
@@ -416,15 +416,13 @@ type AWS {
   Subnet: Subnet
   SecurityGroup: SecurityGroup
   EC2: Ec2
+  customfield: String
 }
 
 type Query {
-  aws_ec2(
+  aws(
     profile: String = "default"
-    filters: String = ""): Ec2
-  aws_rds(
-    profile: String = "default"
-    filters: String = ""): Rds
+    filters: String = ""): Aws
 }
 
 schema {
