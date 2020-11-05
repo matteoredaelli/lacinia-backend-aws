@@ -1,3 +1,8 @@
+type TagList {
+  Key: String
+  Value: String
+}
+
 type OptionGroupMemberships {
   OptionGroupName: String
   Status: String
@@ -5,12 +10,6 @@ type OptionGroupMemberships {
 
 type SubnetAvailabilityZone {
   Name: String
-}
-
-type Subnets {
-  SubnetIdentifier: String
-  SubnetStatus: String
-  SubnetAvailabilityZone: SubnetAvailabilityZone
 }
 
 type DbSubnetGroup {
@@ -43,32 +42,37 @@ type DbInstances {
   Engine: String
   DBInstanceStatus: String
   MasterUsername: String
+  DBName: String
   AllocatedStorage: Int
   InstanceCreateTime: String
   PreferredBackupWindow: String
   BackupRetentionPeriod: Int
   AvailabilityZone: String
   PreferredMaintenanceWindow: String
+  LatestRestorableTime: String
   MultiAZ: Boolean
   EngineVersion: String
   AutoMinorVersionUpgrade: Boolean
   LicenseModel: String
+  Iops: Int
   PubliclyAccessible: Boolean
   StorageType: String
   DbInstancePort: Int
-  DBClusterIdentifier: String
   StorageEncrypted: Boolean
-  KmsKeyId: String
   DbiResourceId: String
   CACertificateIdentifier: String
   CopyTagsToSnapshot: Boolean
   MonitoringInterval: Int
-  PromotionTier: Int
+  EnhancedMonitoringResourceArn: String
+  MonitoringRoleArn: String
   DBInstanceArn: String
   IAMDatabaseAuthenticationEnabled: Boolean
   PerformanceInsightsEnabled: Boolean
   DeletionProtection: Boolean
+  MaxAllocatedStorage: Int
+  TagList: [TagList]
   AssociatedRoles: [String]
+  EnabledCloudwatchLogsExports: [String]
   DomainMemberships: [String]
   OptionGroupMemberships: [OptionGroupMemberships]
   ReadReplicaDBInstanceIdentifiers: [String]
@@ -80,7 +84,6 @@ type DbInstances {
 }
 
 type Rds {
-  NextToken: String
   DBInstances: [DbInstances]
 }
 
@@ -122,6 +125,7 @@ type DbClusters {
   ActivityStreamStatus: String
   CopyTagsToSnapshot: Boolean
   CrossAccountClone: Boolean
+  TagList: [TagList]
   DomainMemberships: [String]
   AssociatedRoles: [String]
   VpcSecurityGroups: [VpcSecurityGroups]
@@ -130,9 +134,139 @@ type DbClusters {
   AvailabilityZones: [String]
 }
 
-type RdsClusters {
-  NextToken: String
+type RdsCluster {
   DBClusters: [DbClusters]
+}
+
+type Timeline {
+  CreationDateTime: String
+  ReadyDateTime: String
+}
+
+type StateChangeReason {
+  Message: String
+}
+
+type Status {
+  State: String
+  Timeline: Timeline
+  StateChangeReason: StateChangeReason
+}
+
+type Clusters {
+  Id: String
+  Name: String
+  NormalizedInstanceHours: Int
+  ClusterArn: String
+  Status: Status
+}
+
+type Emr {
+  Clusters: [Clusters]
+}
+
+type Users {
+  Path: String
+  UserName: String
+  UserId: String
+  Arn: String
+  CreateDate: String
+}
+
+type User {
+  NextToken: String
+  Users: [Users]
+}
+
+type Tags {
+  Key: String
+  Value: String
+}
+
+type CidrBlockState {
+  State: String
+}
+
+type CidrBlockAssociationSet {
+  AssociationId: String
+  CidrBlock: String
+  CidrBlockState: CidrBlockState
+}
+
+type Vpcs {
+  CidrBlock: String
+  DhcpOptionsId: String
+  State: String
+  VpcId: String
+  OwnerId: String
+  InstanceTenancy: String
+  IsDefault: Boolean
+  Tags: [Tags]
+  CidrBlockAssociationSet: [CidrBlockAssociationSet]
+}
+
+type Subnets {
+  AvailabilityZone: String
+  AvailabilityZoneId: String
+  AvailableIpAddressCount: Int
+  CidrBlock: String
+  DefaultForAz: Boolean
+  MapPublicIpOnLaunch: Boolean
+  MapCustomerOwnedIpOnLaunch: Boolean
+  State: String
+  SubnetId: String
+  VpcId: String
+  OwnerId: String
+  AssignIpv6AddressOnCreation: Boolean
+  SubnetArn: String
+  Tags: [Tags]
+  Ipv6CidrBlockAssociationSet: [String]
+}
+
+type Subnet {
+  NextToken: String
+  Subnets: [Subnets]
+}
+
+type IpRanges {
+  CidrIp: String
+}
+
+type IpPermissionsEgress {
+  IpProtocol: String
+  UserIdGroupPairs: [String]
+  PrefixListIds: [String]
+  Ipv6Ranges: [String]
+  IpRanges: [IpRanges]
+}
+
+type IpPermissions {
+  FromPort: Int
+  IpProtocol: String
+  ToPort: Int
+  UserIdGroupPairs: [String]
+  PrefixListIds: [String]
+  Ipv6Ranges: [String]
+  IpRanges: [IpRanges]
+}
+
+type SecurityGroups {
+  Description: String
+  GroupName: String
+  OwnerId: String
+  GroupId: String
+  VpcId: String
+  IpPermissionsEgress: [IpPermissionsEgress]
+  IpPermissions: [IpPermissions]
+}
+
+type SecurityGroup {
+  NextToken: String
+  SecurityGroups: [SecurityGroups]
+}
+
+type EnclaveOptions {
+  Enabled: Boolean
 }
 
 type MetadataOptions {
@@ -155,24 +289,8 @@ type CpuOptions {
   ThreadsPerCore: Int
 }
 
-type Tags {
-  Key: String
-  Value: String
-}
-
-type StateReason {
-  Code: String
-  Message: String
-}
-
-type SecurityGroups {
-  GroupName: String
-  GroupId: String
-}
-
 type PrivateIpAddresses {
   Primary: Boolean
-  PrivateDnsName: String
   PrivateIpAddress: String
 }
 
@@ -194,7 +312,6 @@ type NetworkInterfaces {
   MacAddress: String
   NetworkInterfaceId: String
   OwnerId: String
-  PrivateDnsName: String
   PrivateIpAddress: String
   SourceDestCheck: Boolean
   Status: String
@@ -205,6 +322,11 @@ type NetworkInterfaces {
   Ipv6Addresses: [String]
   Groups: [Groups]
   Attachment: Attachment
+}
+
+type IamInstanceProfile {
+  Arn: String
+  Id: String
 }
 
 type Ebs {
@@ -224,11 +346,6 @@ type State {
   Name: String
 }
 
-type ProductCodes {
-  ProductCodeId: String
-  ProductCodeType: String
-}
-
 type Placement {
   AvailabilityZone: String
   GroupName: String
@@ -246,6 +363,7 @@ type Instances {
   InstanceType: String
   KeyName: String
   LaunchTime: String
+  Platform: String
   PrivateDnsName: String
   PrivateIpAddress: String
   PublicDnsName: String
@@ -255,22 +373,24 @@ type Instances {
   Architecture: String
   ClientToken: String
   EbsOptimized: Boolean
+  EnaSupport: Boolean
   Hypervisor: String
   RootDeviceName: String
   RootDeviceType: String
   SourceDestCheck: Boolean
   VirtualizationType: String
+  EnclaveOptions: EnclaveOptions
   MetadataOptions: MetadataOptions
   HibernationOptions: HibernationOptions
   CapacityReservationSpecification: CapacityReservationSpecification
   CpuOptions: CpuOptions
   Tags: [Tags]
-  StateReason: StateReason
   SecurityGroups: [SecurityGroups]
   NetworkInterfaces: [NetworkInterfaces]
+  IamInstanceProfile: IamInstanceProfile
   BlockDeviceMappings: [BlockDeviceMappings]
   State: State
-  ProductCodes: [ProductCodes]
+  ProductCodes: [String]
   Placement: Placement
   Monitoring: Monitoring
 }
@@ -289,7 +409,12 @@ type Ec2 {
 
 type AWS {
   RDS: Rds
-  RDSClusters: RdsClusters
+  RDSCluster: RdsCluster
+  EMR: Emr
+  User: User
+  Vpcs: Vpcs
+  Subnet: Subnet
+  SecurityGroup: SecurityGroup
   EC2: Ec2
 }
 
@@ -305,4 +430,3 @@ type Query {
 schema {
   query: Query
 }
-

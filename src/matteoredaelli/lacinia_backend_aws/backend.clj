@@ -34,7 +34,9 @@
 
 (defn parse-filters
   [filters]
-  (map parse-filter (clojure.string/split filters #";")))
+  (if (= filters "")
+    []
+    (map parse-filter (clojure.string/split filters #";"))))
 
 (defn aws-connect
   [profile service]
@@ -42,26 +44,15 @@
                service
                :credentials-provider (credentials/profile-credentials-provider profile)}))
 
-(defn ec2-describe-instances
-  [component profile filters-string]
-  (let [ec2 (aws-connect profile :ec2)
+(defn aws-invoke
+  [component profile service op filters-string]
+  (let [service (aws-connect profile service)
         filters (parse-filters filters-string)
-        resp (aws/invoke ec2
-                         {:op :DescribeInstances
+        resp (aws/invoke service
+                         {:op op
                           :request {:Filters filters}
                           }
                          )]
-    resp
-  ))
-
-(defn rds-describe-db-instances
-  [component profile filters-string]
-  (let [rds (aws-connect profile :rds)
-        filters (parse-filters filters-string)
-        resp (aws/invoke rds
-                         {:op :DescribeDBInstances
-                          :request {:Filters filters}
-                          }
-                )]
+    (clojure.pprint/pprint resp)
     resp
   ))

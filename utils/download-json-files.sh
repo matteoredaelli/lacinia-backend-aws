@@ -5,8 +5,8 @@ prefix=""
 while IFS=, read -r cmd object
 do
     echo "$prefix\"$object\":"
-    aws $cmd --max-items 2 > $object
-    cat $object
+    aws $cmd --max-items 5 > $TMP/$object
+    cat $TMP/$object
     prefix=","
 done < aws.csv
 

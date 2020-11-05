@@ -13,41 +13,23 @@
   (fn [context _args value]
     "dummy test field"))
 
-(defn query-aws-ec2
-  [backend]
+(defn query-aws
+  [backend service op]
   (fn [context args value]
     (let [
           {:keys [profile filters]} args]
       (clojure.pprint/pprint args)
-      (backend/ec2-describe-instances backend profile filters))))
-
-(defn query-aws-rds
-  [backend]
-  (fn [context args value]
-    (let [
-          {:keys [profile filters]} args]
-      (backend/rds-describe-db-instances backend profile filters))))
+      (backend/aws-invoke backend profile service op filters))))
 
 (defn resolver-map
   [component]
   (let [backend (:aws-backend component)]
-    {:Query {:aws_ec2 (query-aws-ec2 backend)
-             :aws_rds (query-aws-rds backend)}
+    {:Query {:aws_ec2 (query-aws backend :ec2 :DescribeInstances)
+             :aws_rds (query-aws backend :rds :DescribeDBInstances)}
      ;; :Ec2Instances {:customfield (field-customfield backend)}
      }
     ))
 
-(defn resolver-map-old
-  [component]
-  (let [backend (:aws-backend component)]
-    { :Query {:aws_ec2 (query-aws-ec2 backend)}}
-    ))
-
-(defn get-schema-old
-  [component]
-  (parser/parse-schema (slurp (io/resource "aws-schema.graphql"))
-                       {:resolvers (resolver-map component)}
-                       ))
 
 (defn get-schema
   [component]
