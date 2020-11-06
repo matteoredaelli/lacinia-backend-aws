@@ -20,27 +20,44 @@
     (let [
           {:keys [profile filters]} args]
       (clojure.pprint/pprint context)
-      (backend/aws-invoke backend profile service op filters))))
+      (backend/aws-invoke backend
+                          profile
+                          service
+                          op
+                          filters))))
 
 (defn invoke-aws
   [backend service op]
   (fn [context args value]
     (let [
-          {:keys [::profile ::filters]} context]
-      (clojure.pprint/pprint value)
-      (backend/aws-invoke backend ::profile service op ::filters))))
+          ;; TODO do not work
+          {:keys [::profile ::filters]} context
+          args (-> context
+                      (get-in [:request :parsed-lacinia-query :selections])
+                      (nth 0)
+                      (get :arguments))
+          profile (:profile args)
+          filters (:filters args)
+          ]
+
+      ;;(clojure.pprint/pprint (:arguments (nth (get-in context [:request :parsed-lacinia-query :selections]) 0)))
+      (clojure.pprint/pprint ::filters)
+      (backend/aws-invoke backend
+                          profile
+                          service
+                          op
+                          filters))))
 
 (defn query-aws
   [backend]
   (fn [context args value]
     (let [
           {:keys [profile filters]} args]
-      (clojure.pprint/pprint args
-      (-> {}
-                 ;; https://lacinia.readthedocs.io/en/latest/resolve/context.html
-          (resolve/with-context {::profile profile
-                                 ::filter filter
-                                 })))))
+      ;;(clojure.pprint/pprint args)
+      ;; https://lacinia.readthedocs.io/en/latest/resolve/context.html
+      (resolve/with-context {} {::profile profile
+                                ::filters filters
+                                }))))
 
 (defn resolver-map
   [component]

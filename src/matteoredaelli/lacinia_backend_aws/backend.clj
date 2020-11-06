@@ -46,6 +46,7 @@
 
 (defn aws-invoke
   [component profile service op filters-string]
+  (clojure.pprint/pprint [profile service op filters-string])
   (let [service (aws-connect profile service)
         filters (parse-filters filters-string)
         resp (aws/invoke service
@@ -53,6 +54,5 @@
                           :request {:Filters filters}
                           }
                          )]
-    (clojure.pprint/pprint resp)
     resp
   ))
