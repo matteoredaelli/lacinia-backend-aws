@@ -14,6 +14,17 @@
   (fn [context _args value]
     "dummy test field"))
 
+(defn instance-field-name
+  [backend]
+  (fn [_context _args value]
+    (let [tags (filter #(= (:Key %)
+                         "Name")
+                       (:Tags value))]
+      (if (= (count tags) 1)
+        (:Value (nth tags 0))
+        "")
+      )))
+
 (defn query-aws-old
   [backend service op]
   (fn [context args value]
@@ -66,6 +77,7 @@
             }
      :Aws {:EC2 (invoke-aws backend :ec2 :DescribeInstances)
            :customfield (field-customfield backend)}
+     :Instances {:name (instance-field-name backend)}
      }
     ))
 

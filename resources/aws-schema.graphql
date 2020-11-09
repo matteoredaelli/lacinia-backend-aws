@@ -357,6 +357,7 @@ type Monitoring {
 }
 
 type Instances {
+  name: String
   AmiLaunchIndex: Int
   ImageId: String
   InstanceId: String
